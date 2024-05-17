@@ -1,0 +1,32 @@
+.countdown-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+@media (orientation: landscape) {
+    .countdown-container {
+        flex-direction: row;
+        justify-content: space-around;
+    }
+}
+
+.event-info {
+    margin-bottom: 20px;
+}
+
+.event-info label, .event-info input {
+    display: block;
+    margin: 5px 0;
+}
+
+.time-display {
+    text-align: center;
+    font-size: 1.25rem;
+}
+
+.time {
+    font-size: 1.5rem;
+    color: purple;
+}
+  
