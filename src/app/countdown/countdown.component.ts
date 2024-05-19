@@ -1,9 +1,10 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { AutoResizeDirective } from '../auto-resize.directive'
 
 @Component({
   selector: 'event-countdown',
   standalone: true,
-  imports: [],
+  imports: [AutoResizeDirective],
   templateUrl: './countdown.component.html',
   styleUrl: './countdown.component.scss'
 })
@@ -36,8 +37,6 @@ export class CountdownComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.updateCountdown()
-
-    // TODO: cleanup later
     this.interval = setInterval(() => this.updateCountdown(), 1000)
   }
 

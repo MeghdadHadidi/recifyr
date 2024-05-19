@@ -13,7 +13,11 @@ import { CountdownComponent } from "./countdown/countdown.component"
 export class AppComponent {
   title = 'FrontendChallenge'
 
-  eventDate: string = new Date('2024-06-21').toString()
+  /**
+   * default event date converted to string with - as separator
+   * so that it shows up in the native date picker
+   */
+  eventDate: string = new Date('2024-06-21').toISOString().split('T')[0]
   eventTitle: string = "Midsummer Eve"
 
   get eventDateAsMillis(): number {
