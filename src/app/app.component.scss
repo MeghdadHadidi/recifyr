@@ -4,11 +4,56 @@ main {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   position: relative;
 
+
   h1 {
     font-size: 6rem;
+  }
+
+  .event-info {
+    display: flex;
+    gap: 2rem;
+    width: 80%;
+
+    > div {
+      flex: 1;
+      position: relative;
+      
+      input {
+        box-sizing: border-box;
+        width: 100%;
+        border-radius: 4px;
+        background-color: transparent;
+        border: 1px solid #757373;
+        font-size: 0.9rem;
+        padding: 1rem 0.75rem;
+      }
+
+      label {
+        font-size: 0.9rem;
+        position: absolute;
+        top: -20%;
+        left: 0.25rem;
+        background-color: #f5f5f5;
+        padding: 0 0.5rem;
+      }
+    }
+
+  }
+
+  // media query targetting portrait mode for all devices
+  @media screen and (orientation: portrait) {
+    .event-info {
+      flex-wrap: wrap;
+      max-width: 80%;
+
+      > div {
+        width: 100%;
+        flex: none;
+      }
+    }
   }
 }

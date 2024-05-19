@@ -4,13 +4,6 @@
     align-items: center;
 }
 
-@media (orientation: landscape) {
-    .countdown-container {
-        flex-direction: row;
-        justify-content: space-around;
-    }
-}
-
 .event-info {
     margin-bottom: 20px;
 }
@@ -23,10 +16,14 @@
 .time-display {
     text-align: center;
     font-size: 1.25rem;
-}
+    width: 100vw;
 
-.time {
-    font-size: 1.5rem;
-    color: purple;
+    h4 {
+        font-weight: 800;
+        color: #72035D;
+    }
+
+    .time {
+        font-size: 1.5rem;
+    }
 }
-  

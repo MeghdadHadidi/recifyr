@@ -1,6 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wdth,wght@0,75..100,300..800;1,75..100,300..800&display=swap');
 
-body {
+html, body {
   margin: 0;
   font-size: 100%;
+  font-family: "Open Sans", sans-serif;
 }
