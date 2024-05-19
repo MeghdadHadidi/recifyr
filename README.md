@@ -6,7 +6,7 @@
 - [x] Move the input fields to parent component
 - [x] Add necessary styles to achieve the figma design specification
 - [x] Add a function to change the `font-size`
-- [ ] Use RxJx instead of `setInterval`
+- [x] Use RxJx instead of `setInterval`
 - [ ] Accessibility improvements
 
 ## Improvements

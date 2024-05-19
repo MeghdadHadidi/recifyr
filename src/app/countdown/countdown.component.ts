@@ -1,10 +1,12 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { AutoResizeDirective } from '../auto-resize.directive'
+import { Subscription, interval } from "rxjs"
+import { CommonModule } from "@angular/common"
 
 @Component({
   selector: 'event-countdown',
   standalone: true,
-  imports: [AutoResizeDirective],
+  imports: [AutoResizeDirective, CommonModule],
   templateUrl: './countdown.component.html',
   styleUrl: './countdown.component.scss'
 })
@@ -33,21 +35,21 @@ export class CountdownComponent implements OnInit, OnDestroy {
   }
 
   // reference to the interval to clear it later
-  interval: ReturnType<typeof setInterval> | undefined;
+  subscription!: Subscription
 
   ngOnInit(): void {
     this.updateCountdown()
-    this.interval = setInterval(() => this.updateCountdown(), 1000)
+    this.subscription = interval(1000).subscribe(x => { this.updateCountdown(); });
   }
 
   ngOnDestroy(): void {
-    clearInterval(this.interval)
+    this.subscription.unsubscribe()
   }
 
   // a getter that returns a calculated event title based on the countdown object
   get eventTitleCalculated(): string {
     // if the countdown is all 0 then we are done and the event is over
-    const { days, hours, minutes, seconds } = this.countdown
+    const { days, hours, minutes, seconds } = this.countdown || {}
     if(days + hours + minutes + seconds === 0) {
       return `Event is over! 🎉`
     }
