@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 
 @Component({
   selector: 'event-countdown',
@@ -7,23 +7,59 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
   templateUrl: './countdown.component.html',
   styleUrl: './countdown.component.scss'
 })
-export class CountdownComponent implements OnInit {
-  // hardcoding the current date for now
-  // TODO: create a form in parent component
-  // and pass as input
-  targetDate: Date = new Date('2024-06-21T00:00:00')
+export class CountdownComponent implements OnInit, OnDestroy {
+  /**
+   * This property is required. We will check for this before
+   * caculating and rendering the timer
+   */
+  @Input({ required: true }) targetDateMillis!: number;
+  @Input() eventTitle!: string;
 
-  // let's keep the countdown as a formatted string 
-  countdown: string = '' // '00 days, 00 h, 00 m, 00 s'
+  /**
+   * Keeping the countdown in a more complex structure
+   * it makes it easy to have more granular control
+   * over different parts of the the countdown
+   * 
+   * TODO:
+   * enhancement - make sure next part of the timer needs 
+   * to be update first before calculating and updating it
+   */
+  countdown!: {
+    days: number
+    hours: number
+    minutes: number
+    seconds: number
+  }
+
+  // reference to the interval to clear it later
+  interval: ReturnType<typeof setInterval> | undefined;
 
   ngOnInit(): void {
-    // TODO: cleanup before unmount
-    setInterval(() => this.updateCountdown(), 1000)
+    this.updateCountdown()
+
+    // TODO: cleanup later
+    this.interval = setInterval(() => this.updateCountdown(), 1000)
+  }
+
+  ngOnDestroy(): void {
+    clearInterval(this.interval)
+  }
+
+  // a getter that returns a calculated event title based on the countdown object
+  get eventTitleCalculated(): string {
+    // if the countdown is all 0 then we are done and the event is over
+    const { days, hours, minutes, seconds } = this.countdown
+    if(days + hours + minutes + seconds === 0) {
+      return `Event is over! 🎉`
+    }
+
+    // if event title exists, add `Tile left to...`, otherwise return a default title
+    return this.eventTitle ? `Time left to ${this.eventTitle}` : `Time left to go`
   }
 
   private updateCountdown(): void {
     const currentTime = new Date();
-    const diff = this.targetDate.getTime() - currentTime.getTime()
+    const diff = this.targetDateMillis - currentTime.getTime()
 
     const dayInMillis = 1000 * 60 * 60 * 24
     const hourInMillis = 1000 * 60 * 60
@@ -34,9 +70,19 @@ export class CountdownComponent implements OnInit {
       const hours = Math.floor((diff % dayInMillis) / hourInMillis)
       const minutes = Math.floor((diff % hourInMillis) / minuteInMillis)
       const seconds = Math.floor((diff % minuteInMillis) / 1000)
-      this.countdown = `${days} days, ${hours} h, ${minutes} m, ${seconds} s`
+      this.countdown = {
+        days,
+        hours,
+        minutes,
+        seconds
+      }
     } else {
-      this.countdown = "It's time!"
+      this.countdown = {
+        days: 0,
+        hours: 0,
+        minutes: 0,
+        seconds: 0
+      }
     }
   }
 }

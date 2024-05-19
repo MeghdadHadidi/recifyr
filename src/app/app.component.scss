@@ -1,8 +1,9 @@
-
 main {
-  width: 100%;
+  background-color: #f5f3f3;
+  width: 100vw;
   min-height: 100vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   position: relative;

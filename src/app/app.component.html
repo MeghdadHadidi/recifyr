@@ -1,5 +1,16 @@
 <main class="main">
-  <event-countdown></event-countdown>
+  <event-countdown [targetDateMillis]="eventDateAsMillis" [eventTitle]="eventTitle"></event-countdown>
+  
+  <div class="event-info">
+    <div>
+      <label>Title</label>
+      <input type="text" [(ngModel)]="eventTitle" placeholder="What is going to happen?" />
+    </div>
+    <div>
+      <label>Date</label>
+      <input type="date" [(ngModel)]="eventDate" />
+    </div>
+  </div>
 </main>
 
 <router-outlet />
